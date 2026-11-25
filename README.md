@@ -1,8 +1,8 @@
 # AI Medical Video Production / إنتاج فيديوهات طبية بالذكاء الاصطناعي
 
-A faceless social media video system for medical education: short explainer videos made with AI tools, without showing the creator's face or voice.
+A faceless social media video system for medical education: short explainer videos made with AI tools, without showing the creator's face. The narration may use the creator's own cloned voice (decided later; see below).
 
-نظام لإنتاج فيديوهات تعليمية طبية قصيرة للسوشيال ميديا بالذكاء الاصطناعي، من غير ما يظهر وجه صانع المحتوى أو صوته.
+نظام لإنتاج فيديوهات تعليمية طبية قصيرة للسوشيال ميديا بالذكاء الاصطناعي، من غير ما يظهر وجه صانع المحتوى. التعليق ممكن يكون بصوت صانع المحتوى المستنسخ (قرار متأخر، شوف تحت).
 
 ---
 
@@ -25,7 +25,7 @@ A faceless social media video system for medical education: short explainer vide
 | Video language / لغة الفيديو | Egyptian Arabic (عامية مصرية) |
 | Platforms / المنصات | TikTok, Instagram Reels, YouTube Shorts |
 | Format / الشكل | Vertical 9:16, under 60 seconds / رأسي 9:16، أقل من 60 ثانية |
-| Style / الأسلوب | Faceless, no creator voice / من غير وجه ولا صوت صانع المحتوى |
+| Style / الأسلوب | Faceless. Narration: first episodes used a synthetic girl's voice (Mimi, ElevenLabs). Upcoming videos will use the creator's own cloned voice (Egyptian Arabic). / من غير وجه. التعليق: الحلقات الأولى بصوت بنت (Mimi)، والفيديوهات الجاية هتكون بصوت صانع المحتوى المستنسخ (عامية مصرية). |
 | First topic / أول موضوع | First aid tips for the Christmas season (ميلاد المسيح): common holiday injuries / إسعافات أولية لموسم الأعياد: إصابات شائعة |
 
 ## Folder structure / هيكل المجلدات
@@ -47,8 +47,10 @@ A faceless social media video system for medical education: short explainer vide
    **مصادر موثوقة.** كل معلومة لازم تكون من كتاب أو إرشادات معتمدة أو بحث محكّم، وتتسجل المصدر لكل فيديو.
 4. **Disclaimer on every video.** Example: "For educational purposes only. Not medical advice. Consult a doctor for medical concerns."
    **تنويه في كل فيديو.** مثال: "للتثقيف الصحي فقط، وليس نصيحة طبية. استشر طبيبك في أي مشكلة صحية."
-5. **Label AI-generated content.** Use the platform's AI-content label whenever footage looks realistic.
-   **علّم المحتوى المولّد بالذكاء الاصطناعي.** استخدم علامة المنصة لأي مقطع يبدو واقعي.
+5. **Label AI-generated content.** Use the platform's AI-content label whenever footage looks realistic or the voice is synthetic.
+   **علّم المحتوى المولّد بالذكاء الاصطناعي.** استخدم علامة المنصة لأي مقطع يبدو واقعي، وأي تعليق صوتي مولّد.
+7. **Voice ownership.** A cloned voice may only be the creator's own voice. Keep the voice ID and the consent note for it in the project notes.
+   **ملكية الصوت.** الصوت المستنسخ لازم يكون صوت صانع المحتوى نفسه بس. احفظ الـ voice ID وملاحظة التأكيد في ملاحظات المشروع.
 6. **No impersonation.** Do not use the names, logos, or likeness of real doctors, hospitals, or organizations.
    **ممنوع الانتحال.** ما تستخدمش أسماء أو شعارات أو شبه أطباء أو مستشفيات أو جهات حقيقية.
 
@@ -70,6 +72,6 @@ Each step will be documented here as it is tested. / كل خطوة هتتوثق 
 
 ## Status / الحالة
 
-Setup stage. Language, platforms, and first topic are chosen. Tools and the first test video are still to be chosen.
+Setup stage. Language, platforms, and first topic are chosen. Episode 1 of the Christmas series is done as a test (2 Canva clips, synthetic narration, Arabic captions). Next: record the creator's voice and create a voice clone for upcoming videos.
 
-مرحلة الإعداد. تم تحديد اللغة والمنصات وأول موضوع. الأدوات وأول فيديو تجريبي لسه هيتحددوا.
+مرحلة الإعداد. تم تحديد اللغة والمنصات وأول موضوع. الحلقة 1 من سلسلة الميلاد اتعملت كتجربة (مقطعين من Canva، وتعليق بصوت مولّد، وكابشن عربي). الخطوة الجاية: تسجيل صوت صانع المحتوى وعمل نسخة مستنسخة منه للفيديوهات الجاية.
