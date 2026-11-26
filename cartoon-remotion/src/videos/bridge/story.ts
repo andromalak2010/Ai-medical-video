@@ -1,4 +1,4 @@
-// Timeline of the bridge short: shots timed to the the voice words (~/bridge-short/voice/words.json),
+// Timeline of the bridge short: shots timed to the the voice words (voice/words.json in the project root),
 // story physics (column position, march phase, deck bounce, collapse) and the camera grammar measured in the
 // reference study: continuous slow push-ins; symmetric ease-in-out moves ~23 f (10 in / 10 out), peak ~15 px/f at 720p;
 // big reframes are cuts; impacts are 7-frame kicks that flip sign every frame; no hand-held float.
