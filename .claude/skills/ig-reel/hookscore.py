@@ -36,7 +36,10 @@ import re
 import statistics
 import sys
 
-WORD_RE = re.compile(r"[A-Za-z0-9$%'’-]+")
+# Arabic letters (U+0600-06FF, presentation forms U+0750-077F, U+FB50-FDFF, U+FE70-FEFF)
+# and Arabic-Indic digits (U+0660-0669) count as word characters. Without them every
+# Arabic word was dropped and the scores read 0 words.
+WORD_RE = re.compile(r"[A-Za-z0-9\u0660-\u0669\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF$%'’-]+")
 NUMBER_RE = re.compile(
     r"\$\s?\d[\d,]*(?:\.\d+)?"                       # money, whole
     r"|\b\d[\d,]*(?:\.\d+)?\s?"                      # a figure, with or
