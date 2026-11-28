@@ -92,8 +92,42 @@ class ParsingTests(unittest.TestCase):
         item = nb.normalize_record("1002", CHAPTER_RAW)
         self.assertEqual(item.record_type, "chapter")
         self.assertEqual(item.book_title, "Pharmacology: Principles of Drug Action")
-        self.assertIn("In: Pharmacology: Principles of Drug Action.", item.citation)
+        self.assertIn("Pharmacology: Principles of Drug Action.", item.citation)
         self.assertIn("Doe, A", item.authors)
+
+    def test_real_section_record_uses_bookinfo_context(self):
+        # Shape taken from a live NCBI ESummary (db=books, LactMed section).
+        raw = {
+            "uid": "5939282",
+            "title": "Substance Identification",
+            "pubdate": "2006/01/01 00:00",
+            "accessionid": "NBK501304",
+            "rtype": "sec",
+            "bookaccessionid": "NBK501922",
+            "chapteraccessionid": "NBK501304",
+            "bookinfo": (
+                '<Info><Path><Parent id="lactmed" role="source" type="book" uid="4565728">'
+                "<Title>Drugs and Lactation Database (LactMed&#xAE;)</Title></Parent>"
+                '<Parent id="LM430" role="document" type="chapter" uid="4569248">'
+                "<Title>Clofazimine</Title></Parent>"
+                '<Self id="LM430.s2" role="object" type="sec" uid="5939282">'
+                "<Title>Substance Identification</Title></Self></Path></Info>"
+            ),
+        }
+        item = nb.normalize_record("5939282", raw)
+        self.assertEqual(item.record_type, "section")
+        self.assertEqual(item.title, "Substance Identification")
+        self.assertEqual(item.chapter_title, "Clofazimine")
+        self.assertEqual(item.book_title, "Drugs and Lactation Database (LactMed®)")
+        self.assertEqual(item.publication_date, "2006/01/01")
+        # Links to the chapter page, the page NCBI lists for this section.
+        self.assertEqual(item.url, "https://www.ncbi.nlm.nih.gov/books/NBK501304/")
+        self.assertIn("In: Clofazimine.", item.citation)
+
+    def test_bookinfo_parse_error_falls_back_safely(self):
+        item = nb.normalize_record("8", {"title": "T", "bookinfo": "<broken"})
+        self.assertEqual(item.title, "T")
+        self.assertIsNone(item.chapter_title)
 
     def test_no_summary_is_invented(self):
         item = nb.normalize_record("1001", BOOK_RAW)

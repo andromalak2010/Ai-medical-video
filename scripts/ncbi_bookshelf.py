@@ -42,6 +42,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
 from typing import Callable, Optional
 
@@ -221,8 +222,9 @@ class EutilsClient:
 class BookshelfResult:
     uid: str
     title: Optional[str]
-    record_type: str  # "book", "chapter" or "unknown"
+    record_type: str  # "book", "chapter", "section" or "unknown"
     book_title: Optional[str]
+    chapter_title: Optional[str]
     authors: list[str]
     publication_date: Optional[str]
     accession: Optional[str]  # NBK id, e.g. "NBK12345"
@@ -257,14 +259,52 @@ def _authors(raw: dict) -> list[str]:
     return names
 
 
-def _accession(raw: dict) -> Optional[str]:
-    for key in ("bookaccession", "accessionid", "accession", "nbk", "ncbi_id"):
+def _bookinfo(raw: dict) -> dict:
+    """Parse the `bookinfo` XML: parent book and chapter titles for a record."""
+    info = {"book_title": None, "chapter_title": None}
+    text = raw.get("bookinfo")
+    if not isinstance(text, str) or not text.strip():
+        return info
+    try:
+        root = ET.fromstring(text)
+    except ET.ParseError:
+        return info
+    for parent in root.iter("Parent"):
+        title = _clean(parent.findtext("Title"))
+        if parent.get("type") == "book" and title:
+            info["book_title"] = title
+        elif parent.get("type") == "chapter" and title:
+            info["chapter_title"] = title
+    return info
+
+
+def _clean(value: Optional[str]) -> Optional[str]:
+    if isinstance(value, str) and value.strip():
+        return " ".join(value.split())
+    return None
+
+
+def _record_type(raw: dict, book_title: Optional[str], title: Optional[str]) -> str:
+    rtype = str(raw.get("rtype", "")).lower()
+    if rtype == "book":
+        return "book"
+    if rtype == "chapter":
+        return "chapter"
+    if rtype == "sec":
+        return "section"
+    if book_title:  # no explicit type: a title that sits inside a book is a chapter
+        return "chapter"
+    return "book" if title else "unknown"
+
+
+def _accession(raw: dict, record_type: str) -> Optional[str]:
+    """NBK id for the page a result links to: the chapter for chapters and sections."""
+    if record_type == "book":
+        keys = ("bookaccessionid", "bookaccession", "accessionid", "accession")
+    else:
+        keys = ("chapteraccessionid", "accessionid", "accession", "bookaccessionid")
+    for key in keys:
         value = raw.get(key)
-        if isinstance(value, str):
-            match = NBK_PATTERN.search(value)
-            if match:
-                return match.group(0)
-    for value in raw.values():
         if isinstance(value, str):
             match = NBK_PATTERN.search(value)
             if match:
@@ -291,6 +331,7 @@ def build_citation(
     book_title: Optional[str],
     date: Optional[str],
     url: Optional[str],
+    chapter_title: Optional[str] = None,
 ) -> str:
     """Build a citation from the fields that exist. Missing fields are omitted."""
     parts: list[str] = []
@@ -301,8 +342,10 @@ def build_citation(
         parts.append(_end(author_text))
     if title:
         parts.append(_end(title))
-    if book_title:
-        parts.append(_end(f"In: {book_title}"))
+    if chapter_title and chapter_title != title:
+        parts.append(_end(f"In: {chapter_title}"))
+    if book_title and book_title != title:
+        parts.append(_end(book_title))
     parts.append("NCBI Bookshelf.")
     if date:
         parts.append(_end(date))
@@ -312,20 +355,19 @@ def build_citation(
 
 
 def normalize_record(uid: str, raw: dict) -> BookshelfResult:
+    info = _bookinfo(raw)
     title = _first_text(raw, "title", "chaptertitle")
-    book_title = _first_text(raw, "booktitle", "bookname")
+    book_title = info["book_title"] or _first_text(raw, "booktitle", "bookname")
     if book_title and title and book_title.lower() == title.lower():
-        book_title = None  # a book whose title is repeated, not a chapter
-    if book_title:
-        record_type = "chapter"
-    elif title:
-        record_type = "book"
-    else:
-        record_type = "unknown"
+        book_title = None  # a book repeating its own title is not a chapter
+    chapter_title = info["chapter_title"] or _first_text(raw, "chaptertitle")
+    record_type = _record_type(raw, book_title, title)
 
     authors = _authors(raw)
     date = _first_text(raw, "pubdate", "epubdate", "sortpubdate")
-    accession = _accession(raw)
+    if date:
+        date = date.replace(" 00:00", "")  # NCBI adds a midnight time to dates
+    accession = _accession(raw, record_type)
     url = f"{BOOKSHELF_BASE}{accession}/" if accession else None
 
     summary_text = _first_text(raw, "summary", "abstract", "description")
@@ -336,12 +378,15 @@ def normalize_record(uid: str, raw: dict) -> BookshelfResult:
         title=title,
         record_type=record_type,
         book_title=book_title,
+        chapter_title=chapter_title,
         authors=authors,
         publication_date=date,
         accession=accession,
         url=url,
         summary=summary,
-        citation=build_citation(authors, title, book_title, date, url),
+        citation=build_citation(
+            authors, title, book_title, date, url, chapter_title=chapter_title
+        ),
     )
 
 
@@ -394,7 +439,9 @@ def format_markdown(label: str, total: int, results: list[BookshelfResult]) -> s
     for index, item in enumerate(results, start=1):
         kind = item.record_type.capitalize()
         lines.append(f"{index}. **{item.title or '(untitled)'}** ({kind})")
-        if item.book_title:
+        if item.chapter_title and item.chapter_title != item.title:
+            lines.append(f"   - Chapter: {item.chapter_title}")
+        if item.book_title and item.book_title != item.title:
             lines.append(f"   - Book: {item.book_title}")
         if item.authors:
             lines.append(f"   - Authors: {'; '.join(item.authors)}")
