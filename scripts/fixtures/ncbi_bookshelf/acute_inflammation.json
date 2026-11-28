@@ -1,0 +1,65 @@
+{
+ "term": "\"acute inflammation\"[Title]",
+ "count": "3",
+ "esummary": {
+  "uids": [
+   "5348934",
+   "4444748",
+   "4385884"
+  ],
+  "5348934": {
+   "uid": "5348934",
+   "title": "RESOLUTION OF ACUTE INFLAMMATION STIMULATES TISSUE REGENERATION",
+   "pubdate": "2022/04/21 00:00",
+   "id": "nap26551/ch6/sec/pz109-3/PMC",
+   "accessionid": "NBK582254",
+   "parents": "",
+   "rtype": "sec",
+   "rid": "NBK582254/pz109-3",
+   "text": "",
+   "bookinfo": "<Info><Path><Parent id=\"nap26551\" role=\"source\" type=\"book\" uid=\"5317404\"><Title>Understanding the Role of the Immune System in Improving Tissue Regeneration: Proceedings of a Workshop</Title></Parent><Parent id=\"ch6\" role=\"document\" type=\"chapter\" uid=\"5348926\"><Title>Modulating the Host Immune System to Create a Pro-Regenerative Environment</Title></Parent><Self id=\"pz109-3\" role=\"object\" type=\"sec\" uid=\"5348934\"><Title>RESOLUTION OF ACUTE INFLAMMATION STIMULATES TISSUE REGENERATION</Title></Self></Path><Citation CitationType=\"Object\"><MainRecord><Title>RESOLUTION OF ACUTE INFLAMMATION STIMULATES TISSUE REGENERATION.</Title></MainRecord><ParentRecord><Title>Understanding the Role of the Immune System in Improving Tissue Regeneration: Proceedings of a Workshop.</Title><Contributors>National Academies of Sciences, Engineering, and Medicine; Health and Medicine Division; Board on Health Sciences Policy; Forum on Regenerative Medicine; Nicholson A, Schumm SN, Beachy SH, editors.</Contributors><PublicationStatement>Washington (DC): National Academies Press (US); 2022 Apr 21.</PublicationStatement></ParentRecord><Location>6, Modulating the Host Immune System to Create a Pro-Regenerative Environment</Location></Citation></Info>",
+   "bookid": 5317404,
+   "bookaccessionid": "NBK579641",
+   "chapterid": 5348926,
+   "chapteraccessionid": "NBK582254",
+   "book": "nap26551",
+   "navigation": "yes"
+  },
+  "4444748": {
+   "uid": "4444748",
+   "title": "Surgery to Treat Gallstones and Acute Inflammation of the Gallbladder",
+   "pubdate": "2016/12/01 00:00",
+   "id": "sbu259/PMC",
+   "accessionid": "NBK448013",
+   "parents": "",
+   "rtype": "book",
+   "rid": "NBK448013",
+   "text": "",
+   "bookinfo": "<Info><Path><Self id=\"sbu259\" role=\"source\" type=\"book\" uid=\"4444748\"><Title>Surgery to Treat Gallstones and Acute Inflammation of the Gallbladder</Title></Self></Path><Citation CitationType=\"Source\"><MainRecord><Title>Surgery to Treat Gallstones and Acute Inflammation of the Gallbladder [Internet].</Title><Contributors>Swedish Council on Health Technology Assessment.</Contributors><PublicationStatement>Stockholm: Swedish Council on Health Technology Assessment (SBU); 2016 Dec.</PublicationStatement></MainRecord></Citation><BookTeaser><b>Conclusions</b></BookTeaser><ResourceType/><ResourceType>Systematic Reviews</ResourceType></Info>",
+   "bookid": 4444748,
+   "bookaccessionid": "NBK448013",
+   "chapterid": 4444748,
+   "chapteraccessionid": "NBK448013",
+   "book": "sbu259",
+   "navigation": "yes"
+  },
+  "4385884": {
+   "uid": "4385884",
+   "title": "Acute inflammation of the bile duct",
+   "pubdate": "2006/01/01 00:00",
+   "id": "pmh_iqwig/i2368.folgen-ny/sec/i2368.folgen-ny.acuteinflammationoft/PMC",
+   "accessionid": "NBK424898",
+   "parents": "",
+   "rtype": "sec",
+   "rid": "NBK424898/i2368.folgen-ny.acuteinflammationoft",
+   "text": "",
+   "bookinfo": "<Info><Path><Parent id=\"pmh_iqwig\" role=\"source\" type=\"book\" uid=\"2625328\"><Title>InformedHealth.org</Title></Parent><Parent id=\"i2368.folgen-ny\" role=\"document\" type=\"chapter\" uid=\"4385880\"><Title>Gallstones: Learn More &#x2013; Complications of gallstones</Title></Parent><Self id=\"i2368.folgen-ny.acuteinflammationoft\" role=\"object\" type=\"sec\" uid=\"4385884\"><Title>Acute inflammation of the bile duct</Title></Self></Path><Citation CitationType=\"Object\"><MainRecord><Title>Acute inflammation of the bile duct.</Title></MainRecord><ParentRecord><Title>InformedHealth.org [Internet].</Title><PublicationStatement>Cologne, Germany: Institute for Quality and Efficiency in Health Care (IQWiG); 2006-.</PublicationStatement></ParentRecord><Location>Gallstones: Learn More &#x2013; Complications of gallstones</Location></Citation></Info>",
+   "bookid": 2625328,
+   "bookaccessionid": "NBK65083",
+   "chapterid": 4385880,
+   "chapteraccessionid": "NBK424898",
+   "book": "pmh_iqwig",
+   "navigation": "yes"
+  }
+ }
+}
